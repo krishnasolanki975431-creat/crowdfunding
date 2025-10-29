@@ -27,7 +27,7 @@ contract CrowdFund {
         payable(owner).transfer(address(this).balance);
     }
 
-    // (Optional) Function 3: Refund if goal not reached
+    // Function 3: Refund contributors if goal not reached
     function refund() external {
         require(totalFunds < goal, "Goal reached, cannot refund");
         uint256 amount = contributions[msg.sender];
@@ -35,5 +35,14 @@ contract CrowdFund {
         contributions[msg.sender] = 0;
         payable(msg.sender).transfer(amount);
     }
-}
 
+    // Function 4: Get contract balance
+    function getContractBalance() external view returns (uint256) {
+        return address(this).balance;
+    }
+
+    // Function 5: Get how much a contributor has donated
+    function getContributorAmount(address _contributor) external view returns (uint256) {
+        return contributions[_contributor];
+    }
+}
